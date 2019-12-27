@@ -60,13 +60,11 @@ class MovieListWidget extends StatelessWidget {
           child: new Column(
             children: <Widget>[
               new CachedNetworkImage(
-                imageUrl: movies[index].coverURL, 
+                imageUrl: movies[index].coverURL,
+                height: 200.0,
+                fit: BoxFit.fitWidth,
                 placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => new Icon(Icons.error)),
-              // FadeInImage(
-              //   image: NetworkImage(movies[index].coverURL),
-              //   placeholder: AssetImage("images/question_mark.png")
-              // ),
               new Text(movies[index].title,
                 style:
                     new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)
