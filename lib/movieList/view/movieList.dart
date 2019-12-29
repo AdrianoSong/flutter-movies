@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_movies/movieList/model/movie.dart';
+import 'package:flutter_movies/movieList/view/movieListCellWidget.dart';
 import 'package:flutter_movies/shared/api/movieApi.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:io' show Platform;
 
 class MovieList extends StatefulWidget {
   MovieList({Key key}) : super(key: key);
@@ -34,7 +36,11 @@ class MovieListState extends State<MovieList> {
             } else if (snapshot.hasError) {
               return Text("Fail to load movies ${snapshot.error}");
             } else {
-              return new CircularProgressIndicator();
+              if (Platform.isAndroid) {
+                return new CircularProgressIndicator();
+              } else if (Platform.isIOS) {
+                return new CupertinoActivityIndicator(radius: 28.0,);
+              }
             }
           }),
         ),
@@ -57,21 +63,7 @@ class MovieListWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         return new Container(
           padding: new EdgeInsets.all(16.0),
-          child: new Column(
-            children: <Widget>[
-              new CachedNetworkImage(
-                imageUrl: movies[index].coverURL,
-                height: 200.0,
-                fit: BoxFit.fitWidth,
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => new Icon(Icons.error)),
-              new Text(movies[index].title,
-                style:
-                    new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)
-              ),
-              new Divider()
-            ],
-          ),
+          child: new MovieListCellWidget(movie: movies[index])
         );
       },
     );
