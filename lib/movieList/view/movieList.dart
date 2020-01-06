@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_movies/movieList/model/movie.dart';
+import 'package:flutter_movies/movieList/view/movieDetails.dart';
 import 'package:flutter_movies/movieList/view/movieListCellWidget.dart';
 import 'package:flutter_movies/shared/api/movieApi.dart';
 import 'dart:io' show Platform;
@@ -29,17 +30,18 @@ class MovieListState extends State<MovieList> {
         appBar: new AppBar(
           title: new Text("Movie List")
         ),
-        body: Center(
+        body: new Center(
           child: new FutureBuilder(future: movies, builder: (context, snapshot) {
             if (snapshot.hasData) {
               return new MovieListWidget(movies: snapshot.data);
             } else if (snapshot.hasError) {
-              return Text("Fail to load movies ${snapshot.error}");
+              //TODO: put error state screen here
+              return new Text("Fail to load movies ${snapshot.error}");
             } else {
-              if (Platform.isAndroid) {
+              if (Platform.isIOS) {
+                return new CupertinoActivityIndicator(radius: 28.0);
+              } else {
                 return new CircularProgressIndicator();
-              } else if (Platform.isIOS) {
-                return new CupertinoActivityIndicator(radius: 28.0,);
               }
             }
           }),
@@ -53,7 +55,7 @@ class MovieListWidget extends StatelessWidget {
   final List<Movie> movies;
 
   MovieListWidget({
-    this.movies
+    @required this.movies
   });
 
   @override
@@ -61,9 +63,18 @@ class MovieListWidget extends StatelessWidget {
     return new ListView.builder(
       itemCount: movies.length,
       itemBuilder: (context, index) {
-        return new Container(
-          padding: new EdgeInsets.all(16.0),
-          child: new MovieListCellWidget(movie: movies[index])
+        return new GestureDetector(
+          child: new Container(
+            padding: new EdgeInsets.all(16.0),
+            child: new MovieListCellWidget(movie: movies[index])
+          ), 
+          onTap: () {
+            Navigator.push(
+              context, new MaterialPageRoute(
+                builder: (context) => MovieDetailsWidget(movie: movies[index])
+              )
+            );
+          }
         );
       },
     );
