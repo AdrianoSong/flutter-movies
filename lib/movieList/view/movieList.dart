@@ -65,7 +65,7 @@ class MovieListWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         return new GestureDetector(
           child: new Container(
-            padding: new EdgeInsets.all(16.0),
+            padding: new EdgeInsets.all(8.0),
             child: new MovieListCellWidget(movie: movies[index])
           ), 
           onTap: () {

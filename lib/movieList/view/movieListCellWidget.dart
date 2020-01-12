@@ -1,26 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_movies/movieList/model/movie.dart';
-import 'dart:io' show Platform;
+
+import 'package:flutter_movies/shared/customWidgets/cachedImage.dart';
 
 class MovieListCellWidget extends StatelessWidget {
   final Movie movie;
 
-  MovieListCellWidget({this.movie});
+  MovieListCellWidget({ @required this.movie });
 
   @override
   Widget build(BuildContext context) {
-    return new Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          new CachedNetworkImage(
-              imageUrl: movie.coverURL,
-              height: 200.0,
-              fit: BoxFit.fitWidth,
-              placeholder: (context, url) => 
-                Platform.isAndroid ? CircularProgressIndicator() : CupertinoActivityIndicator(),
-              errorWidget: (context, url, error) => new Icon(Icons.error)),
+    return new SizedBox(
+      height: 220, 
+      child: new Card(
+        elevation: 6.0,
+        margin: EdgeInsets.all(8.0),
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            new Padding(
+              padding: EdgeInsets.only(left: 16.0), 
+              child: new CustomCachedImage(imageURL: movie.coverURL, imageHeight: 200.0)
+              ),
           //Flexible: for text wrap content
           new Flexible(
               child: 
@@ -43,6 +45,8 @@ class MovieListCellWidget extends StatelessWidget {
               )
             )
           ]
-      );
+        )
+      )
+    );
   }
 }
