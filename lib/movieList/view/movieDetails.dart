@@ -17,31 +17,71 @@ class MovieDetailsWidget extends StatelessWidget {
       appBar: new AppBar(
         title: new Text(movie.title)
       ),
-    body: new Container(
-      padding: EdgeInsets.all(16.0),
-      child: new Column(
-        children: <Widget>[
-          new CustomCachedImage(imageURL: movie.coverURL, imageHeight: 400.0),
-          new Row(
-            children: <Widget>[
-              new Align(alignment: Alignment.centerLeft, child: new Text("Ano de lançamento: ${movie.releaseYear}", style: new TextStyle(fontSize: 16.0))),
-              new Align(alignment: Alignment.centerRight, child: new Text("Duração: ${movie.duration}", style: new TextStyle(fontSize: 16.0)))
-            ],
+    body: new SingleChildScrollView(
+      child: new Container(
+        padding: EdgeInsets.all(16.0),
+        child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            new CustomCachedImage(imageURL: movie.coverURL, imageHeight: 400.0),
+            SizedBox(height: 16),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+              children: <Widget>[
+                new Align(
+                  alignment: Alignment.centerLeft, 
+                  child: new Row(children: <Widget>[
+                    new Text(
+                      "Lançamento: ", 
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 18.0)
+                      ),
+                    new Text(
+                      "${movie.releaseYear}", 
+                      style: new TextStyle(
+                      fontSize: 18.0)
+                      )
+                    ]
+                )
+              ),
+                new Align(
+                  alignment: Alignment.centerRight, 
+                  child: new Row(children: <Widget>[
+                    new Text(
+                      "Duração: ", 
+                      style: new TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 18.0)
+                      ),
+                    new Text(
+                      "${movie.duration}", 
+                      style: new TextStyle(
+                        fontSize: 18.0)
+                      )
+                    ]
+                  )
+                )
+            ]
           ),
-          new Align(
-            alignment: Alignment.centerLeft, 
-            child: new Text(
-              "Sinopse", 
-              style: new TextStyle(
-                fontWeight: FontWeight.bold, 
-                fontSize: 18.0
+            SizedBox(height: 16),
+            new Align(
+              alignment: Alignment.centerLeft, 
+              child: new Text(
+                "Sinopse", 
+                style: new TextStyle(
+                  fontWeight: FontWeight.bold, 
+                  fontSize: 18.0
+                )
               )
-            )
-          ),
-          new Text(movie.overview, style: new TextStyle(fontSize: 18.0))
-        ],
+            ),
+            SizedBox(height: 8),
+            new Text(
+              movie.overview, 
+              style: new TextStyle(fontSize: 18.0)
+              )
+            ],
+          )
+        )
       )
-    )
     );
   }
 }

@@ -35,8 +35,7 @@ class MovieListState extends State<MovieList> {
             if (snapshot.hasData) {
               return new MovieListWidget(movies: snapshot.data);
             } else if (snapshot.hasError) {
-              //TODO: put error state screen here
-              return new Text("Fail to load movies ${snapshot.error}");
+              return new MovieListEmptyStateWidget();
             } else {
               if (Platform.isIOS) {
                 return new CupertinoActivityIndicator(radius: 28.0);
@@ -77,6 +76,28 @@ class MovieListWidget extends StatelessWidget {
           }
         );
       },
+    );
+  }
+}
+
+class MovieListEmptyStateWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      padding: EdgeInsets.all(16.0),
+      child: new Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        new Text("😥", style: new TextStyle(fontSize: 38.0)),
+        new SizedBox(height: 16.0),
+        new Text(
+          "Opss... Occurs a problem, please try again later", 
+          textAlign: TextAlign.center,
+          style: new TextStyle(
+            fontSize: 20.0, color: Colors.red)
+          )
+        ]
+      )
     );
   }
 }

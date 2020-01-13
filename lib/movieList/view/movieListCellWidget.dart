@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_movies/movieList/model/movie.dart';
-
 import 'package:flutter_movies/shared/customWidgets/cachedImage.dart';
 
 class MovieListCellWidget extends StatelessWidget {
